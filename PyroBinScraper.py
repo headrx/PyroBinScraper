@@ -9,8 +9,9 @@
 
 from bs4 import BeautifulSoup
 import requests
-import os
+import os, sys
 import subprocess
+from sys import platform
 
 def build_pdfs(url):
     headers = {'User Agent': 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 '}
@@ -43,8 +44,11 @@ def build_pages(url):
 def download(url):
     filename = url.split('/')
     filename = filename[2]
-    subprocess.call(f"wget --max-redirect 0 ‐O {filename} {url}", shell=True)
-
+    print("THIS IS FILE NAME *******************************::::::", filename)
+    if "win" or 'nt' in (platform):
+        subprocess.call(f"wget {url} -O {filename}", shell=True)
+    else:
+        subprocess.call(f"wget --max-redirect 0 {url} ‐O //pyro_docs//{filename} ", shell=True)
 #Main loop
 base = "http://pyrobin.com"
 url = "http://pyrobin.com/files.php"
